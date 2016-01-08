@@ -139,20 +139,104 @@ function op_CXNN(op) {
 }
 
 function op_DXYN(op) {
+  var Vx = V[(op & 0x0F00) >> 8],
+      Vy = V[(op & 0x0F00) >> 4],
+      h  = op & 0x000F,
+      pixel;
 
+  V[15] = 0;
+  for (var y = 0; y < h; y++) {
+    pixel = memory[I + y];
+    for (var x = 0; x < 8; x++) {
+      if ((pixel & (128 >> x)) == 1) {
+        if (display[(Vx + x + ((Vy + y) * 64))] == 1)) {
+          V[15] = 1;
+        }
+        display[(Vx + x + ((Vy + y) * 64))] ^= 1;
+      }
+    }
+  }
+
+  draw();
+  pc += 2;
 }
 
-function op_EX9E(op) {}
-function op_EXA1(op) {}
-function op_FX07(op) {}
-function op_FX0A(op) {}
-function op_FX15(op) {}
-function op_FX18(op) {}
-function op_FX1E(op) {}
-function op_FX29(op) {}
-function op_FX33(op) {}
-function op_FX55(op) {}
-function op_FX65(op) {}
+function op_EX9E(op) {
+  if (keys[V[(op & 0x0F00) >> 8]] == 1) {
+    pc += 4;
+  } else {
+    pc += 2;
+  }
+}
+
+function op_EXA1(op) {
+  if (keys[V[(op & 0x0F00) >> 8]] == 0) {
+    pc += 4;
+  } else {
+    pc += 2;
+  }  
+}
+
+function op_FX07(op) {
+  V[(opcode & 0x0F00) >> 8] = delay;
+  pc += 2;
+}
+
+function op_FX0A(op) {
+  var key_down = false;
+
+  for (var i = 0; i < 16; i++) {
+    if (keys[i] == 1) {
+      key_down = true;
+      V[(opcode & 0x0F00) >> 8] = i;
+    }
+  }
+  
+  if (key_down) {
+    pc += 2;
+  }
+}
+
+function op_FX15(op) {
+  delay = V[(opcode & 0x0F00) >> 8];
+  pc += 2;
+}
+
+function op_FX18(op) {
+  sound = V[(opcode & 0x0F00) >> 8];
+  pc += 2;
+}
+
+function op_FX1E(op) {
+  // TODO? should there be overflow check??
+  // apparently it's an undocumented feature?
+  I += V[(opcode & 0x0F00) >> 8];
+  pc += 2;
+}
+
+function op_FX29(op) {
+  I = V[(opcode & 0x0F00) >> 8] * 0x5;
+  pc += 2;
+}
+
+function op_FX33(op) {
+  memory[I]   =  V[(opcode & 0x0F00) >> 8] / 100;
+  memory[I+1] = (V[(opcode & 0x0F00) >> 8] / 10)  % 10;
+  memory[I+2] = (V[(opcode & 0x0F00) >> 8] % 100) % 10;         
+  pc += 2;
+}
+
+function op_FX55(op) {
+  for (var i = 0; i <= ((opcode & 0x0F00) >> 8); i++) {
+    memory[I+i] = V[i]; 
+  }
+}
+
+function op_FX65(op) {
+   for (var i = 0; i <= ((opcode & 0x0F00) >> 8); i++) {
+    V[i] = memory[I+i];
+  }
+}
 
 var ops = [
   op_00E0, op_00EE, op_1NNN, op_2NNN,
