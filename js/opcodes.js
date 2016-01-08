@@ -148,21 +148,20 @@ function op_DXYN(op) {
   for (var y = 0; y < h; y++) {
     pixel = memory[I + y];
     for (var x = 0; x < 8; x++) {
-      if ((pixel & (128 >> x)) == 1) {
-        if (display[(Vx + x + ((Vy + y) * 64))] == 1)) {
+      if ((pixel & (128 >> x)) != 0) {
+        if (display[(Vx + x + ((Vy + y) * 64))] == 1) {
           V[15] = 1;
         }
         display[(Vx + x + ((Vy + y) * 64))] ^= 1;
       }
     }
   }
-
   draw();
   pc += 2;
 }
 
 function op_EX9E(op) {
-  if (keys[V[(op & 0x0F00) >> 8]] == 1) {
+  if (keys[V[(op & 0x0F00) >> 8]] != 0) {
     pc += 4;
   } else {
     pc += 2;

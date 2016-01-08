@@ -11,8 +11,11 @@ function main() {
   load_program();
 
   // while(true) {
-  var op = memory[pc] << 8 | memory[pc + 1];
-  ops[decode(op)](op);
+  for (var i = 0; i < 30000; i++) {
+    var op = memory[pc] << 8 | memory[pc + 1];
+    ops[decode(op)](op);
+    // console.log({op:op.toString(16), pc:pc, I:I, display:display, V:V});
+  }
   // }
 }
 

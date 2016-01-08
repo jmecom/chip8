@@ -25,6 +25,9 @@ var font = [
 function init_graphics() {
   ctx.fillStyle = "#000000";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+  for (var i = 0; i < font.length; i++) {
+	memory[i] = font[i];
+  }	
 }
 
 function draw() {
