@@ -178,7 +178,7 @@ function op_EXA1(op) {
 }
 
 function op_FX07(op) {
-  V[(opcode & 0x0F00) >> 8] = delay;
+  V[(op & 0x0F00) >> 8] = delay;
   pc += 2;
 }
 
@@ -188,7 +188,7 @@ function op_FX0A(op) {
   for (var i = 0; i < 16; i++) {
     if (keys[i] == 1) {
       key_down = true;
-      V[(opcode & 0x0F00) >> 8] = i;
+      V[(op & 0x0F00) >> 8] = i;
     }
   }
   
@@ -198,42 +198,42 @@ function op_FX0A(op) {
 }
 
 function op_FX15(op) {
-  delay = V[(opcode & 0x0F00) >> 8];
+  delay = V[(op & 0x0F00) >> 8];
   pc += 2;
 }
 
 function op_FX18(op) {
-  sound = V[(opcode & 0x0F00) >> 8];
+  sound = V[(op & 0x0F00) >> 8];
   pc += 2;
 }
 
 function op_FX1E(op) {
   // TODO? should there be overflow check??
   // apparently it's an undocumented feature?
-  I += V[(opcode & 0x0F00) >> 8];
+  I += V[(op & 0x0F00) >> 8];
   pc += 2;
 }
 
 function op_FX29(op) {
-  I = V[(opcode & 0x0F00) >> 8] * 0x5;
+  I = V[(op & 0x0F00) >> 8] * 0x5;
   pc += 2;
 }
 
 function op_FX33(op) {
-  memory[I]   =  V[(opcode & 0x0F00) >> 8] / 100;
-  memory[I+1] = (V[(opcode & 0x0F00) >> 8] / 10)  % 10;
-  memory[I+2] = (V[(opcode & 0x0F00) >> 8] % 100) % 10;         
+  memory[I]   =  V[(op & 0x0F00) >> 8] / 100;
+  memory[I+1] = (V[(op & 0x0F00) >> 8] / 10)  % 10;
+  memory[I+2] = (V[(op & 0x0F00) >> 8] % 100) % 10;         
   pc += 2;
 }
 
 function op_FX55(op) {
-  for (var i = 0; i <= ((opcode & 0x0F00) >> 8); i++) {
+  for (var i = 0; i <= ((op & 0x0F00) >> 8); i++) {
     memory[I+i] = V[i]; 
   }
 }
 
 function op_FX65(op) {
-   for (var i = 0; i <= ((opcode & 0x0F00) >> 8); i++) {
+   for (var i = 0; i <= ((op & 0x0F00) >> 8); i++) {
     V[i] = memory[I+i];
   }
 }
