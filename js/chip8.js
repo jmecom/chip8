@@ -1,36 +1,20 @@
-/** 
- * init: gives initial values to Chip8 internals
- */
-function init() {
-  init_graphics();
-  load_program();
-}
-
+// TODO: be able to load from file, or from 
+//       user input
 function load_program() {
   for (var i = 0; i < program.length; i++) {
     memory[i + 512] = program[i];
   }
 }
 
-/**
- * step: performs one step of the fetch and execute cycle
- */
-function step() {
-  var op = memory[pc] << 8 | memory[pc + 1];
-  ops[decode(op)](op);
-  pc += 2; 
-}
-
 function main() { 
-  init();
+  init_graphics();
+  load_program();
 
   // while(true) {
-    step();
+  var op = memory[pc] << 8 | memory[pc + 1];
+  ops[decode(op)](op);
   // }
-
-  draw();
-
-  return 0;
 }
 
+/* Start the emulator */
 main();

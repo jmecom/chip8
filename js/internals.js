@@ -1,3 +1,9 @@
+/** 
+ * internals.js
+ * Defines and initializes the Chip-8
+ * interpreter's registers and memory
+ */
+
 var memory  = new Uint8Array(4096),
     stack   = new Uint16Array(16),
     display = new Uint8Array(2048),
