@@ -1,3 +1,9 @@
+/** 
+ * opcodes.js
+ * Implements CHIP-8 opcodes and loads
+ * them into a lookup table. 
+ */
+
 function op_00E0(op) {
   display.fill(0);
   draw();
@@ -140,7 +146,7 @@ function op_CXNN(op) {
 
 function op_DXYN(op) {
   var Vx = V[(op & 0x0F00) >> 8],
-      Vy = V[(op & 0x0F00) >> 4],
+      Vy = V[(op & 0x00F0) >> 4],
       h  = op & 0x000F,
       pixel;
 
@@ -237,14 +243,15 @@ function op_FX65(op) {
   }
 }
 
+// Opcode lookup table
 var ops = [
-  op_00E0, op_00EE, op_1NNN, op_2NNN,
-  op_3XNN, op_4XNN, op_5XY0, op_6XNN,
-  op_7XNN, op_8XY0, op_8XY1, op_8XY2,
-  op_8XY3, op_8XY4, op_8XY5, op_8XY6,
-  op_8XY7, op_8XYE, op_9XY0, op_ANNN,
-  op_BNNN, op_CXNN, op_DXYN, op_EX9E,
-  op_EXA1, op_FX07, op_FX0A, op_FX15,
-  op_FX18, op_FX1E, op_FX29, op_FX33,
-  op_FX55, op_FX65
+  op_00E0, op_00EE, op_1NNN, op_2NNN, // 0  - 3
+  op_3XNN, op_4XNN, op_5XY0, op_6XNN, // 4  - 7
+  op_7XNN, op_8XY0, op_8XY1, op_8XY2, // 8  - 11
+  op_8XY3, op_8XY4, op_8XY5, op_8XY6, // 12 - 15
+  op_8XY7, op_8XYE, op_9XY0, op_ANNN, // 16 - 19
+  op_BNNN, op_CXNN, op_DXYN, op_EX9E, // 20 - 23
+  op_EXA1, op_FX07, op_FX0A, op_FX15, // 24 - 27
+  op_FX18, op_FX1E, op_FX29, op_FX33, // 28 - 31
+  op_FX55, op_FX65                    // 32 - 33
 ];

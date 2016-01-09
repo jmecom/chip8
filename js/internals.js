@@ -1,17 +1,17 @@
 /** 
  * internals.js
- * Defines and initializes the Chip-8
- * interpreter's registers and memory
+ * Defines and initializes the CHIP-8
+ * virtual machine's registers and memory.
  */
 
-var memory  = new Uint8Array(4096),
-    stack   = new Uint16Array(16),
-    display = new Uint8Array(2048),
-    V       = new Uint8Array(16),
-    keys    = new Uint8Array(16);
+var memory  = new Uint8Array(4096), // CHIP-8 4K memory
+    stack   = new Uint16Array(16),  // 16 level stack
+    display = new Uint8Array(2048), // 64*32 pixel buffer
+    V       = new Uint8Array(16),   // General purpose registers
+    keys    = new Uint8Array(16);   // Hexadecimal keypad
 
-var I     = 0, 
-    pc    = 512, 
-    sp    = 0,
-    delay = 0, 
-    sound = 0;
+var I     = 0,   // 16-bit ddress register
+    pc    = 512, // Program counter
+    sp    = 0,   // Stack pointer
+    delay = 0,   // Delay timer
+    sound = 0;   // Sound timer
