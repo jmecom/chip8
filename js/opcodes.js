@@ -2,6 +2,8 @@
  * opcodes.js
  * Implements CHIP-8 opcodes and loads
  * them into a lookup table. 
+ * See https://en.wikipedia.org/wiki/CHIP-8
+ * for a list of what each opcode does. 
  */
 
 function op_00E0(op) {
@@ -213,9 +215,12 @@ function op_FX18(op) {
 }
 
 function op_FX1E(op) {
-  // TODO? should there be overflow check??
-  // apparently it's an undocumented feature?
   I += V[(op & 0x0F00) >> 8];
+  if (I + V[(op & 0x0F00) >> 8] > 0xFFF) {
+    V[15] = 1;
+  } else {
+    V[15] = 0;
+  }
   pc += 2;
 }
 
