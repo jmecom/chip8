@@ -198,6 +198,7 @@ function op_DXYN(op) {
 }
 
 function op_EX9E(op) {
+  // console.log('!= : ', op.toString(16), V[X(op)], keys[V[X(op)]]);
   if (keys[V[X(op)]] != 0) {
     pc += 4;
   } else {
@@ -206,6 +207,7 @@ function op_EX9E(op) {
 }
 
 function op_EXA1(op) {
+  // console.log('== : ', op.toString(16), V[X(op)], keys[V[X(op)]]);
   if (keys[V[X(op)]] == 0) {
     pc += 4;
   } else {
@@ -220,11 +222,10 @@ function op_FX07(op) {
 
 function op_FX0A(op) {
   var key_down = false;
-
   for (var i = 0; i < 16; i++) {
     if (keys[i] != 0) {
-      key_down = true;
       V[X(op)] = i;
+      key_down = true;
     }
   }
   
@@ -245,12 +246,12 @@ function op_FX18(op) {
 }
 
 function op_FX1E(op) {
-  I += V[X(op)];
   if (I + V[X(op)] > 0xFFF) {
     V[15] = 1;
   } else {
     V[15] = 0;
   }
+  I += V[X(op)];
   pc += 2;
 }
 
@@ -267,14 +268,14 @@ function op_FX33(op) {
 }
 
 function op_FX55(op) {
-  for (var i = 0; i <= (X(op)); i++) {
-    memory[I+i] = V[i]; 
+  for (var i = 0; i <= X(op); i++) {
+    memory[I + i] = V[i]; 
   }
 }
 
 function op_FX65(op) {
-   for (var i = 0; i <= (X(op)); i++) {
-    V[i] = memory[I+i];
+   for (var i = 0; i <= X(op); i++) {
+    V[i] = memory[I + i];
   }
 }
 

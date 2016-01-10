@@ -48,11 +48,8 @@ function init_graphics() {
 function draw() {
   var x, y;
   for (var i = 0; i < display.length; i++) {
-    if (display[i]) {
-      ctx.fillStyle = "#FFFFFF";
-    } else {
-      ctx.fillStyle = "#000000";
-    } 
+    ctx.fillStyle = display[i] ? "#FFFFFF" : "#000000";
+
     // The canvas size is bigger than the pixel buffer,
     // so (x, y) are translated and pixels are 8x8 in size.
     x = (i % width)/width * canvas.width;
