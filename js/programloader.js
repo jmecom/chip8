@@ -5,11 +5,17 @@
  */
 
 function read_file(file, callback) {
+  // Reset everything
   reset();
+  init_graphics();
   draw();
+
+  // Read file
   var reader = new FileReader();
   reader.onload = callback;
   reader.readAsArrayBuffer(file);
+
+  // Begin the emulator
   main();
 }
 

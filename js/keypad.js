@@ -1,3 +1,9 @@
+/** 
+ * keypad.js
+ * Defines event handlers for keypresses,
+ * which update the internal CHIP-8 keys buffer.
+ */
+
 /**
  * map_key(keyCode)
  * Given a keyCode from a key event, 

@@ -6,6 +6,10 @@
  * for a list of what each opcode does. 
  */
 
+function op_0NNN(op){
+  console.log(op.toString(16));
+}
+
 function op_00E0(op) {
   display.fill(0);
   draw();
@@ -193,15 +197,17 @@ function op_FX0A(op) {
   var key_down = false;
 
   for (var i = 0; i < 16; i++) {
-    if (keys[i] == 1) {
+    if (keys[i] != 0) {
       key_down = true;
       V[(op & 0x0F00) >> 8] = i;
     }
   }
   
-  if (key_down) {
-    pc += 2;
+  if (!key_down) {
+    console.log('Hi');
+    return;
   }
+  pc += 2;
 }
 
 function op_FX15(op) {
@@ -250,13 +256,13 @@ function op_FX65(op) {
 
 // Opcode lookup table
 var ops = [
-  op_00E0, op_00EE, op_1NNN, op_2NNN, // 0  - 3
-  op_3XNN, op_4XNN, op_5XY0, op_6XNN, // 4  - 7
-  op_7XNN, op_8XY0, op_8XY1, op_8XY2, // 8  - 11
-  op_8XY3, op_8XY4, op_8XY5, op_8XY6, // 12 - 15
-  op_8XY7, op_8XYE, op_9XY0, op_ANNN, // 16 - 19
-  op_BNNN, op_CXNN, op_DXYN, op_EX9E, // 20 - 23
-  op_EXA1, op_FX07, op_FX0A, op_FX15, // 24 - 27
-  op_FX18, op_FX1E, op_FX29, op_FX33, // 28 - 31
-  op_FX55, op_FX65                    // 32 - 33
+  op_00E0, op_00EE, op_1NNN, op_2NNN, 
+  op_3XNN, op_4XNN, op_5XY0, op_6XNN, 
+  op_7XNN, op_8XY0, op_8XY1, op_8XY2, 
+  op_8XY3, op_8XY4, op_8XY5, op_8XY6,
+  op_8XY7, op_8XYE, op_9XY0, op_ANNN,
+  op_BNNN, op_CXNN, op_DXYN, op_EX9E, 
+  op_EXA1, op_FX07, op_FX0A, op_FX15, 
+  op_FX18, op_FX1E, op_FX29, op_FX33, 
+  op_FX55, op_FX65, op_0NNN          
 ];

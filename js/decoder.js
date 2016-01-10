@@ -156,6 +156,5 @@ function decode(op) {
       }
     break;
   } 
-  console.log("Opcode " + op.toString(16) + " not found.");
-  return -1;
+  return 34;
 }

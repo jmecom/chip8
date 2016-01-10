@@ -33,3 +33,4 @@ function reset() {
   sound = 0;
   pc = 512;
 }
+
