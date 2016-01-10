@@ -6,8 +6,33 @@
  * for a list of what each opcode does. 
  */
 
-function op_0NNN(op){
-  console.log(op.toString(16));
+///////////////////////////////////////////
+//                "Macros"               //
+///////////////////////////////////////////
+
+function X(op) {
+  return (op & 0x0F00) >> 8;
+}
+
+function Y(op) {
+  return (op & 0x00F0) >> 4;
+}
+
+function NN(op) {
+  return op & 0x00FF;
+}
+
+function NNN(op) {
+  return op & 0x0FFF;
+}
+
+////////////////////////////////////////////
+//                 Opcodes                //      
+////////////////////////////////////////////
+
+function op_0NNN(op) {
+  // Unused opcode
+  // console.log(op.toString(16));
 }
 
 function op_00E0(op) {
@@ -23,17 +48,17 @@ function op_00EE(op) {
 }
 
 function op_1NNN(op) {
-  pc = op & 0x0FFF;
+  pc = NNN(op);
 }
 
 function op_2NNN(op) {
   stack[sp] = pc;
   sp++;           
-  pc = op & 0x0FFF;
+  pc = NNN(op);
 }
 
 function op_3XNN(op) {
-  if (V[(op & 0x0F00) >> 8] == (op & 0x00FF)) {
+  if (V[X(op)] == NN(op)) {
     pc += 4;
   } else {
     pc += 2;
@@ -41,7 +66,7 @@ function op_3XNN(op) {
 }
 
 function op_4XNN(op) {
-  if (V[(op & 0x0F00) >> 8] != (op & 0x00FF)) {
+  if (V[X(op)] != NN(op)) {
     pc += 4;
   } else {
     pc += 2;
@@ -49,7 +74,7 @@ function op_4XNN(op) {
 }
 
 function op_5XY0(op) {
-  if (V[(op & 0x0F00) >> 8] == V[(op & 0x00F0) >> 4]) {
+  if (V[X(op)] == V[Y(op)]) {
     pc += 4;
   } else {
     pc += 2;
@@ -57,79 +82,79 @@ function op_5XY0(op) {
 }
 
 function op_6XNN(op) {
-  V[(op & 0x0F00) >> 8] = op & 0x00FF;
+  V[X(op)] = NN(op);
   pc += 2;
 }
 
 function op_7XNN(op) {
-  V[(op & 0x0F00) >> 8] += op & 0x00FF;
+  V[X(op)] += NN(op);
   pc += 2;
 }
 
 function op_8XY0(op) {
-  V[(op & 0x0F00) >> 8] = V[(op & 0x00F0) >> 4];
+  V[X(op)] = V[Y(op)];
   pc += 2;
 }
 
 function op_8XY1(op) {
-  V[(op & 0x0F00) >> 8] |= V[(op & 0x00F0) >> 4];
+  V[X(op)] |= V[Y(op)];
   pc += 2;
 }
 
 function op_8XY2(op) {
-  V[(op & 0x0F00) >> 8] &= V[(op & 0x00F0) >> 4];
+  V[X(op)] &= V[Y(op)];
   pc += 2;
 }
 
 function op_8XY3(op) {
-  V[(op & 0x0F00) >> 8] ^= V[(op & 0x00F0) >> 4];
+  V[X(op)] ^= V[Y(op)];
   pc += 2;
 }
 
 function op_8XY4(op) { 
-  if (V[(op & 0x00F0) >> 4] > (0xFF - V[(op & 0x0F00) >> 8])) { 
+  if (V[Y(op)] > (0xFF - V[X(op)])) { 
     V[15] = 1;
   } else {
     V[15] = 0;         
   }
-  V[(op & 0x0F00) >> 8] += V[(op & 0x00F0) >> 4];
+  V[X(op)] += V[Y(op)];
   pc += 2;  
 }
 
 function op_8XY5(op) {
-  if (V[(op & 0x00F0) >> 4] > V[(op & 0x0F00) >> 8]) {
+  if (V[Y(op)] > V[X(op)]) {
     V[15] = 0;
   } else { 
     V[15] = 1;         
   }
-  V[(op & 0x0F00) >> 8] -= V[(op & 0x00F0) >> 4];
+  V[X(op)] -= V[Y(op)];
   pc += 2;
 }
 
 function op_8XY6(op) {
-  V[15] = V[(op & 0x0F00) >> 8] & 0x1;
-  V[(op & 0x0F00) >> 8] >>= 1;
+  V[15] = V[X(op)] & 0x1;
+  V[X(op)] >>= 1;
   pc += 2;
 }
 
 function op_8XY7(op) {
-  if (V[(op & 0x0F00) >> 8] > V[(op & 0x00F0) >> 4]) {
+  if (V[X(op)] > V[Y(op)]) {
     V[15] = 0; 
   } else {
     V[15] = 1;
   }
-  V[(op & 0x0F00) >> 8] = V[(op & 0x00F0) >> 4] - V[(op & 0x0F00) >> 8];        
+  V[X(op)] = V[Y(op)] - V[X(op)];        
   pc += 2;
 }
 
 function op_8XYE(op) {
-  V[15] = V[(op & 0x0F00) >> 8] >> 7;
-  V[(op & 0x0F00) >> 8] <<= 1;
+  V[15] = V[X(op)] >> 7;
+  V[X(op)] <<= 1;
   pc += 2;
 }
 
 function op_9XY0(op) {
-  if (V[(op & 0x0F00) >> 8] != V[(op & 0x00F0) >> 4]) {
+  if (V[X(op)] != V[Y(op)]) {
     pc += 4;
   } else {
     pc += 2;
@@ -137,22 +162,22 @@ function op_9XY0(op) {
 }
 
 function op_ANNN(op) {
-  I = op & 0x0FFF;
+  I = NNN(op);
   pc += 2;
 }
 
 function op_BNNN(op) {
-  pc = (op & 0x0FFF) + V[0];
+  pc = (NNN(op)) + V[0];
 }
 
 function op_CXNN(op) {
-  V[(op & 0x0F00) >> 8] = (Math.random() * 255) & (op & 0x00FF);
+  V[X(op)] = (Math.random() * 255) & NN(op);
   pc += 2;
 }
 
 function op_DXYN(op) {
-  var Vx = V[(op & 0x0F00) >> 8],
-      Vy = V[(op & 0x00F0) >> 4],
+  var Vx = V[X(op)],
+      Vy = V[Y(op)],
       h  = op & 0x000F,
       pixel;
 
@@ -173,7 +198,7 @@ function op_DXYN(op) {
 }
 
 function op_EX9E(op) {
-  if (keys[V[(op & 0x0F00) >> 8]] != 0) {
+  if (keys[V[X(op)]] != 0) {
     pc += 4;
   } else {
     pc += 2;
@@ -181,7 +206,7 @@ function op_EX9E(op) {
 }
 
 function op_EXA1(op) {
-  if (keys[V[(op & 0x0F00) >> 8]] == 0) {
+  if (keys[V[X(op)]] == 0) {
     pc += 4;
   } else {
     pc += 2;
@@ -189,7 +214,7 @@ function op_EXA1(op) {
 }
 
 function op_FX07(op) {
-  V[(op & 0x0F00) >> 8] = delay;
+  V[X(op)] = delay;
   pc += 2;
 }
 
@@ -199,30 +224,29 @@ function op_FX0A(op) {
   for (var i = 0; i < 16; i++) {
     if (keys[i] != 0) {
       key_down = true;
-      V[(op & 0x0F00) >> 8] = i;
+      V[X(op)] = i;
     }
   }
   
   if (!key_down) {
-    console.log('Hi');
     return;
   }
   pc += 2;
 }
 
 function op_FX15(op) {
-  delay = V[(op & 0x0F00) >> 8];
+  delay = V[X(op)];
   pc += 2;
 }
 
 function op_FX18(op) {
-  sound = V[(op & 0x0F00) >> 8];
+  sound = V[X(op)];
   pc += 2;
 }
 
 function op_FX1E(op) {
-  I += V[(op & 0x0F00) >> 8];
-  if (I + V[(op & 0x0F00) >> 8] > 0xFFF) {
+  I += V[X(op)];
+  if (I + V[X(op)] > 0xFFF) {
     V[15] = 1;
   } else {
     V[15] = 0;
@@ -231,30 +255,33 @@ function op_FX1E(op) {
 }
 
 function op_FX29(op) {
-  I = V[(op & 0x0F00) >> 8] * 0x5;
+  I = V[X(op)] * 0x5;
   pc += 2;
 }
 
 function op_FX33(op) {
-  memory[I]   =  V[(op & 0x0F00) >> 8] / 100;
-  memory[I+1] = (V[(op & 0x0F00) >> 8] / 10)  % 10;
-  memory[I+2] = (V[(op & 0x0F00) >> 8] % 100) % 10;         
+  memory[I]   =  V[X(op)] / 100;
+  memory[I+1] = (V[X(op)] / 10)  % 10;
+  memory[I+2] = (V[X(op)] % 100) % 10;         
   pc += 2;
 }
 
 function op_FX55(op) {
-  for (var i = 0; i <= ((op & 0x0F00) >> 8); i++) {
+  for (var i = 0; i <= (X(op)); i++) {
     memory[I+i] = V[i]; 
   }
 }
 
 function op_FX65(op) {
-   for (var i = 0; i <= ((op & 0x0F00) >> 8); i++) {
+   for (var i = 0; i <= (X(op)); i++) {
     V[i] = memory[I+i];
   }
 }
 
-// Opcode lookup table
+////////////////////////////////////////////
+//           Opcode lookup table          // 
+////////////////////////////////////////////
+
 var ops = [
   op_00E0, op_00EE, op_1NNN, op_2NNN, 
   op_3XNN, op_4XNN, op_5XY0, op_6XNN, 
