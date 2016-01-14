@@ -23,14 +23,15 @@ var I     = 0,   // 16-bit address register
  */
 function reset() {
   memory.fill(0);
-  display.fill(0);
   stack.fill(0);
+  display.fill(0);
   V.fill(0);
   keys.fill(0);
+  
   I = 0;
+  pc = 512;
   sp = 0;
   delay = 0;
   sound = 0;
-  pc = 512;
 }
 
