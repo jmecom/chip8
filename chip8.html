@@ -3,24 +3,30 @@
 	<head>
 		<meta charset=utf-8>
 		<title>CHIP-8</title>
-		<style>
-			#canvas /* Center the canvas */
-			{
-			    padding: 0;
-			    margin: auto;
-			    display: block;
-			    position: absolute;
-			    top: 0;
-			    bottom: 0;
-			    left: 0;
-			    right: 0;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="chip8.css">
 	</head>
 	<body bgcolor="#262626">
 	 	<canvas id="canvas" width="512" height="256"></canvas> 
-		<input type="file" id="file" name="file"></input>
-    <output id="list"></output>
+
+	    <!-- User interface -->
+		<div id="file-div"><input type="file" id="file"></input></div>
+	    <output id="list"></output>
+	    <div id="help-div"><button id="help-btn">Help</button></div>
+	    <div id="help-text-div"><div id="help-text" style="visibility: hidden">
+	    	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quam odio, posuere eget quam eu, ornare consequat sem. Vivamus aliquet maximus dui eu luctus. Proin nec orci ac dolor elementum aliquet. Curabitur rhoncus orci metus, ac egestas justo viverra a. Curabitur ut hendrerit quam. Duis fringilla tortor ac risus viverra, ut euismod lacus varius. Vivamus sit amet quam tempus, pharetra mi non, blandit velit. Proin tortor erat, ultricies ut mauris eget, facilisis ultricies leo. Maecenas vestibulum lacus libero, nec dapibus dolor mollis ut. Nullam mattis est a turpis rhoncus, a interdum elit egestas.
+
+				Fusce viverra eu mauris ut pharetra. Etiam maximus commodo libero sed tincidunt. Aliquam vitae urna metus. Cras porta nec est vitae feugiat. Praesent consectetur pellentesque euismod. Nunc quam tortor, tempus eget nibh mollis, elementum molestie tellus. Sed dictum eget metus in rhoncus. Phasellus bibendum enim a magna pharetra accumsan. Proin hendrerit dignissim nibh, eu gravida sem scelerisque at. Cras suscipit, tortor pharetra feugiat venenatis, magna urna mattis leo, id elementum mi nisl at diam. Cras odio ligula, sodales eget viverra id, tempor eu nisi. Mauris semper felis ut suscipit mattis. Maecenas egestas consequat gravida. 
+	    </div></div>
+
+	    <script>
+        document.getElementById('help-btn').addEventListener('click', function(e) {
+	      	var text = document.getElementById("help-text"); 
+	      	var hv = text.style.visibility == "hidden" ? "visible" : "hidden";
+	      	text.style.visibility = hv;
+        }, false);
+	    </script>
+
+	    <!-- Emulator -->
 		<script src="js/internals.js"></script>
 		<script src="js/graphics.js"></script>
     <script src="js/keypad.js"></script>

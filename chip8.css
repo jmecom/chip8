@@ -1,0 +1,65 @@
+#canvas 
+{
+	padding: 0;
+	margin: auto;
+	display: block;
+	position: absolute;
+
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+#file-div
+{
+	padding: 0;
+	margin: auto;
+	display: block;
+	position: absolute;
+
+	top: 300px;
+	bottom: 0;
+	left: 0;
+	right: 12px;
+
+  width: 500px;
+  height: 1px;
+
+  color: #F0FFFF;
+}
+
+#help-div
+{
+	padding: 0;
+	margin: auto;
+	display: block;
+	position: absolute;
+
+	top: 300px;
+	bottom: 0;
+	left: 0;
+	right: -915px;
+
+  width: 500px;
+  height: 1px;
+
+  color: #F0FFFF;
+}
+
+#help-text-div
+{
+	padding: 0;
+	margin: auto;
+	display: block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+  right: -1050px;
+
+	height: 400px;
+	width: 400px;
+	text-align: justify;
+  color: #F0FFFF;
+}

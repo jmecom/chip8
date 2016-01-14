@@ -271,12 +271,15 @@ function op_FX55(op) {
   for (var i = 0; i <= X(op); i++) {
     memory[I + i] = V[i]; 
   }
+  pc += 2;
 }
 
 function op_FX65(op) {
    for (var i = 0; i <= X(op); i++) {
     V[i] = memory[I + i];
   }
+  I += X(op) + 1;
+  pc += 2;
 }
 
 ////////////////////////////////////////////
