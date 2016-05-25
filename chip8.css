@@ -1,0 +1,85 @@
+#canvas 
+{
+  padding: 0;
+  margin: auto;
+  display: block;
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#load-div
+{
+  padding: 0;
+  margin: auto;
+  display: block;
+  position: absolute;
+
+  top: 280px;
+  bottom: 0;
+  left: 0;
+  right: 12px;
+
+  width: 500px;
+  height: 1px;
+
+  color: #F0FFFF;
+}
+
+#file-div
+{
+  padding: 0;
+  margin: auto;
+  display: block;
+  position: absolute;
+
+  top: 280px;
+  bottom: 0;
+  left: 120px;
+  right: 0;
+
+  width: 500px;
+  height: 1px;
+
+  color: #262626;
+}
+
+#help-div
+{
+  padding: 0;
+  margin: auto;
+  display: block;
+  position: absolute;
+
+  top: 280px;
+  bottom: 0;
+  left: 0;
+  right: -915px;
+
+  width: 500px;
+  height: 1px;
+
+  color: #F0FFFF;
+}
+
+#help-text-div
+{
+  padding: 0;
+  margin: auto;
+  display: block;
+  
+  position: absolute;
+  top: 0;
+  bottom: -175px;
+  left: 0;
+  right: -750px;
+
+  height: 400px;
+  width: 200px;
+
+  color: #F0FFFF;
+  font-family: monospace;
+}

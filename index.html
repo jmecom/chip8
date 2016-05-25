@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title>CHIP-8</title>
+    <link rel="stylesheet" type="text/css" href="chip8.css">
+  </head>
+  <body bgcolor="#262626">
+    <canvas id="canvas" width="512" height="256"></canvas> 
+
+    <!-- User interface -->
+    <div id="load-div"><button id="load-btn">Load</input></div>
+    <div id="file-div"><input type="file" id="file"></input></div>
+    <div id="help-div"><button id="help-btn">Help</button></div>
+    <div id="help-text-div">
+      <div id="help-text" style="visibility: hidden">
+        The keypad is mapped to 1,2,3,4,  Q,W,E,R,  A,S,D,F,  Z,X,C,V. <br><br>
+        Click <strong>Load</strong> and then a program to load a CHIP-8 program. <br><br>
+        Click <strong>Browse</strong> and then select a .ch8 file to open a locally saved CHIP-8 program. <br><br>
+        Made by Jordan Mecom, 2016.
+      </div>
+    </div>
+
+      <!-- Emulator -->
+    <script src="js/internals.js"></script>
+    <script src="js/graphics.js"></script>
+    <script src="js/keypad.js"></script>
+    <script src="js/opcodes.js"></script>
+    <script src="js/decoder.js"></script>
+    <script src="js/chip8.js"></script>
+    <script src="js/programloader.js"></script>
+    <script src="js/interface.js"></script>
+  </body>
+</html>
